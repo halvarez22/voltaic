@@ -13,6 +13,7 @@ import ContactFormModal from './components/ContactFormModal';
 import Chatbot from './components/Chatbot';
 import ChatbotButton from './components/ChatbotButton';
 import WhatsAppButton from './components/WhatsAppButton';
+import QuoteCalculator from './components/QuoteCalculator';
 
 const sectionsInfo = [
   { id: 'hero', Component: Hero },
@@ -46,11 +47,14 @@ const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState(sectionsInfo[0].id);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
 
   const handleOpenModal = useCallback(() => setIsModalOpen(true), []);
   const handleCloseModal = useCallback(() => setIsModalOpen(false), []);
   const handleOpenChatbot = useCallback(() => setIsChatbotOpen(true), []);
   const handleCloseChatbot = useCallback(() => setIsChatbotOpen(false), []);
+  const handleOpenQuote = useCallback(() => setIsQuoteOpen(true), []);
+  const handleCloseQuote = useCallback(() => setIsQuoteOpen(false), []);
 
   const renderedSections = useMemo(() => {
     const allSections = [
@@ -66,13 +70,15 @@ const App: React.FC = () => {
         className="flex-shrink-0 w-screen h-screen overflow-hidden relative"
       >
         {id === 'contacto' || id === 'contacto-clone' ? (
-          <Component id={id} onOpenModal={handleOpenModal} />
+          <Component id={id} onOpenModal={handleOpenModal} onOpenQuote={handleOpenQuote} />
+        ) : id === 'hero' || id === 'hero-clone' ? (
+          <Component id={id} onCTAClick={handleOpenQuote} />
         ) : (
           <Component id={id} />
         )}
       </section>
     ));
-  }, [handleOpenModal]);
+  }, [handleOpenModal, handleOpenQuote]);
 
   const animateScroll = useCallback((target: number, duration: number, onComplete?: () => void) => {
     const mainEl = mainContainerRef.current;
@@ -228,6 +234,7 @@ const App: React.FC = () => {
     <div className="min-h-screen w-screen bg-neutral-950 font-sans flex flex-col relative overflow-hidden">
        <ContactFormModal isOpen={isModalOpen} onClose={handleCloseModal} />
        <Chatbot isOpen={isChatbotOpen} onClose={handleCloseChatbot} />
+       <QuoteCalculator isOpen={isQuoteOpen} onClose={handleCloseQuote} />
        <ChatbotButton onClick={handleOpenChatbot} />
        <WhatsAppButton phoneNumber="5532595798" />
        <div className="relative z-20">

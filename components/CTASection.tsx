@@ -4,6 +4,7 @@ interface CTASectionProps {
   id?: string;
   bgUrl?: string;
   onOpenModal?: () => void;
+  onOpenQuote?: () => void;
 }
 
 const LocationPinIcon: React.FC<{className: string}> = ({className}) => (
@@ -26,7 +27,7 @@ const PhoneIcon: React.FC<{className: string}> = ({className}) => (
     </svg>
 );
 
-const CTASection: React.FC<CTASectionProps> = ({ id = 'contacto', bgUrl, onOpenModal }) => {
+const CTASection: React.FC<CTASectionProps> = ({ id = 'contacto', bgUrl, onOpenModal, onOpenQuote }) => {
   return (
     <section 
       id={id} 
@@ -43,12 +44,20 @@ const CTASection: React.FC<CTASectionProps> = ({ id = 'contacto', bgUrl, onOpenM
           <p className="max-w-xl mx-auto lg:mx-0 text-neutral-300 mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg leading-relaxed">
             Únete a la revolución solar. Contáctanos hoy mismo para una asesoría gratuita y descubre cómo la energía solar puede transformar tu futuro.
           </p>
-          <button
-            onClick={onOpenModal}
-            className="bg-brand-yellow text-neutral-950 font-bold py-3 px-6 sm:px-8 rounded-full text-sm sm:text-base lg:text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 inline-block w-full sm:w-auto"
-          >
-            Solicitar Asesoría Gratuita
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <button
+              onClick={onOpenQuote}
+              className="bg-brand-yellow text-neutral-900 font-bold py-3 px-6 sm:px-8 rounded-full text-sm sm:text-base lg:text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 inline-block w-full sm:w-auto"
+            >
+              🧮 Cotiza tu Proyecto
+            </button>
+            <button
+              onClick={onOpenModal}
+              className="bg-transparent border-2 border-brand-yellow text-brand-yellow font-bold py-3 px-6 sm:px-8 rounded-full text-sm sm:text-base lg:text-lg hover:bg-brand-yellow hover:text-neutral-900 transition-all duration-300 transform hover:scale-105 inline-block w-full sm:w-auto"
+            >
+              Solicitar Asesoría
+            </button>
+          </div>
         </div>
 
         <div className="bg-neutral-800/50 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-lg order-1 lg:order-2">
