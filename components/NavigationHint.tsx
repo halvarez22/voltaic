@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface NavigationHintProps {
   onClose?: () => void;
@@ -7,23 +7,15 @@ interface NavigationHintProps {
 const NavigationHint: React.FC<NavigationHintProps> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    // Verificar si ya se mostró el hint anteriormente
-    const hasSeenHint = localStorage.getItem('voltaic-navigation-hint');
-    
-    if (!hasSeenHint) {
-      // Mostrar el hint después de un pequeño delay
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-        setIsAnimating(true);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, []);
+  const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleClose = () => {
+    // Limpiar el timer de auto-ocultar si existe
+    if (hideTimerRef.current) {
+      clearTimeout(hideTimerRef.current);
+      hideTimerRef.current = null;
+    }
+    
     setIsAnimating(false);
     setTimeout(() => {
       setIsVisible(false);
@@ -31,6 +23,31 @@ const NavigationHint: React.FC<NavigationHintProps> = ({ onClose }) => {
       onClose?.();
     }, 300);
   };
+
+  useEffect(() => {
+    // Verificar si ya se mostró el hint anteriormente
+    const hasSeenHint = localStorage.getItem('voltaic-navigation-hint');
+    
+    if (!hasSeenHint) {
+      // Mostrar el hint después de un pequeño delay
+      const showTimer = setTimeout(() => {
+        setIsVisible(true);
+        setIsAnimating(true);
+        
+        // Auto-ocultar después de 5 segundos adicionales
+        hideTimerRef.current = setTimeout(() => {
+          handleClose();
+        }, 5000);
+      }, 3000);
+
+      return () => {
+        clearTimeout(showTimer);
+        if (hideTimerRef.current) {
+          clearTimeout(hideTimerRef.current);
+        }
+      };
+    }
+  }, []);
 
   if (!isVisible) return null;
 
