@@ -23,13 +23,13 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   return (
     <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-6 left-6 z-40 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 group"
+      className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 bg-green-500 hover:bg-green-600 text-white p-3 sm:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 group"
       aria-label="Contactar por WhatsApp"
     >
       {/* Icono de WhatsApp */}
       <svg 
         xmlns="http://www.w3.org/2000/svg" 
-        className="h-6 w-6" 
+        className="h-5 w-5 sm:h-6 sm:w-6" 
         fill="currentColor" 
         viewBox="0 0 24 24"
       >
@@ -37,16 +37,16 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
       </svg>
       
       {/* Tooltip */}
-      <div className="absolute bottom-full left-0 mb-2 px-3 py-1 bg-neutral-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+      <div className="absolute bottom-full left-0 mb-2 px-2 sm:px-3 py-1 bg-neutral-900 text-white text-xs sm:text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap hidden sm:block">
         ¡Chatea con nosotros!
         <div className="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-neutral-900"></div>
       </div>
       
       {/* Indicador de notificación */}
-      <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+      <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse"></div>
       
       {/* Texto "WhatsApp" que aparece al hacer hover */}
-      <div className="absolute left-full ml-2 px-2 py-1 bg-green-500 text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+      <div className="absolute left-full ml-2 px-2 py-1 bg-green-500 text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap hidden sm:block">
         WhatsApp
       </div>
     </button>

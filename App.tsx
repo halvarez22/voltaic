@@ -225,7 +225,7 @@ const App: React.FC = () => {
   }, [animateScroll]);
 
   return (
-    <div className="h-screen w-screen bg-neutral-950 font-sans flex flex-col relative overflow-hidden">
+    <div className="min-h-screen w-screen bg-neutral-950 font-sans flex flex-col relative overflow-hidden">
        <ContactFormModal isOpen={isModalOpen} onClose={handleCloseModal} />
        <Chatbot isOpen={isChatbotOpen} onClose={handleCloseChatbot} />
        <ChatbotButton onClick={handleOpenChatbot} />
@@ -233,7 +233,7 @@ const App: React.FC = () => {
        <div className="relative z-20">
          <Header onNavClick={handleNavClick} activeSection={activeSection} />
       </div>
-      <main ref={mainContainerRef} id="main-container" className="flex-1 flex w-full overflow-x-auto cursor-grab relative z-10">
+      <main ref={mainContainerRef} id="main-container" className="flex-1 flex w-full overflow-x-auto cursor-grab relative z-10 touch-pan-x">
         {renderedSections}
       </main>
       <div className="relative z-20">

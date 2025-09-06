@@ -312,7 +312,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 w-96 h-[500px] bg-white rounded-lg shadow-2xl border border-gray-200 flex flex-col">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 h-[calc(100vh-2rem)] sm:h-[500px] max-h-[600px] bg-white rounded-lg shadow-2xl border border-gray-200 flex flex-col">
       {/* Header */}
       <div className="bg-brand-yellow text-neutral-900 p-4 rounded-t-lg flex items-center justify-between">
         <div className="flex items-center space-x-2">

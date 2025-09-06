@@ -80,28 +80,28 @@ const ServicesSection: React.FC<{ id?: string; bgUrl?: string }> = ({ id = 'serv
   return (
     <section 
       id={id} 
-      className="flex-shrink-0 w-screen h-full flex flex-col items-center justify-center p-6 relative bg-cover bg-center"
+      className="flex-shrink-0 w-screen h-full flex flex-col items-center justify-center p-4 sm:p-6 relative bg-cover bg-center overflow-y-auto"
       style={{ backgroundImage: bgUrl ? `url('${bgUrl}')` : 'none' }}
     >
       <div className="absolute inset-0 bg-neutral-950/70 z-0"></div>
-      <div className="container mx-auto text-center relative z-10">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+      <div className="container mx-auto text-center relative z-10 max-w-7xl px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight">
           Todos los Servicios de Energía Solar que tu Negocio Necesita
         </h2>
-        <p className="max-w-3xl mx-auto text-neutral-300 text-lg mb-12">
+        <p className="max-w-3xl mx-auto text-neutral-300 text-base sm:text-lg mb-8 sm:mb-12 leading-relaxed">
           VOLTAIC provee todos los servicios que tu negocio necesita para capitalizar las ventajas de la energía solar.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <div 
                 key={index}
-                className="bg-neutral-800/50 backdrop-blur-sm p-8 rounded-lg flex flex-col items-center text-center transition-transform duration-300 hover:scale-105 hover:bg-neutral-800/80 cursor-pointer"
+                className="bg-neutral-800/50 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-lg flex flex-col items-center text-center transition-transform duration-300 hover:scale-105 hover:bg-neutral-800/80 cursor-pointer"
               >
-                <Icon className="w-14 h-14 text-brand-yellow mb-5" />
-                <h3 className="text-xl font-bold mb-3 text-white">{service.title}</h3>
-                <p className="text-neutral-300 text-sm leading-relaxed">{service.description}</p>
+                <Icon className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-brand-yellow mb-3 sm:mb-4 lg:mb-5" />
+                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-white leading-tight">{service.title}</h3>
+                <p className="text-neutral-300 text-xs sm:text-sm leading-relaxed">{service.description}</p>
               </div>
             );
           })}

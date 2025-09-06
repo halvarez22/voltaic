@@ -145,8 +145,8 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
     onClose();
   };
   
-  const backdropClasses = `fixed inset-0 bg-neutral-950/70 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`;
-  const modalClasses = `relative bg-neutral-800 rounded-lg shadow-xl w-full max-w-lg m-6 transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`;
+  const backdropClasses = `fixed inset-0 bg-neutral-950/70 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300 p-4 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`;
+  const modalClasses = `relative bg-neutral-800 rounded-lg shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`;
 
   return (
     <div 

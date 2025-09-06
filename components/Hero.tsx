@@ -39,7 +39,7 @@ const Hero: React.FC<HeroProps> = ({ id = 'hero', onCTAClick }) => {
   return (
     <section 
       id={id} 
-      className="flex-shrink-0 w-screen h-full flex items-center justify-center text-center text-white p-6 relative overflow-hidden"
+      className="flex-shrink-0 w-screen h-full flex items-center justify-center text-center text-white p-4 sm:p-6 relative overflow-hidden"
     >
       {/* Imagen de fondo con lazy loading */}
       <div className="absolute inset-0 w-full h-full">
@@ -53,19 +53,19 @@ const Hero: React.FC<HeroProps> = ({ id = 'hero', onCTAClick }) => {
         />
       </div>
       <div className="absolute inset-0 bg-neutral-950/60 z-0"></div>
-      <div className="relative z-10">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase">
+      <div className="relative z-10 max-w-6xl mx-auto px-4">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase leading-tight">
           Energía Solar para un
           <br />
           <span className="text-brand-yellow">Futuro Sostenible</span>
         </h1>
-        <p className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-neutral-300">
+        <p className="mt-4 sm:mt-6 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-neutral-300 leading-relaxed">
           Transformamos la luz del sol en energía limpia y ahorros para tu hogar o negocio. Descubre el poder de la tecnología fotovoltaica con Voltaic.
         </p>
-        <div className="mt-10">
+        <div className="mt-8 sm:mt-10">
           <button
             onClick={onCTAClick}
-            className="bg-brand-yellow text-neutral-950 font-bold py-3 px-8 rounded-full text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105"
+            className="bg-brand-yellow text-neutral-950 font-bold py-3 px-6 sm:px-8 rounded-full text-base sm:text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
           >
             Cotiza tu Proyecto
           </button>
