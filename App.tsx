@@ -14,6 +14,7 @@ import Chatbot from './components/Chatbot';
 import ChatbotButton from './components/ChatbotButton';
 import WhatsAppButton from './components/WhatsAppButton';
 import QuoteCalculator from './components/QuoteCalculator';
+import NavigationHint from './components/NavigationHint';
 
 const sectionsInfo = [
   { id: 'hero', Component: Hero },
@@ -232,6 +233,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen w-screen bg-neutral-950 font-sans flex flex-col relative overflow-hidden">
+       <NavigationHint />
        <ContactFormModal isOpen={isModalOpen} onClose={handleCloseModal} />
        <Chatbot isOpen={isChatbotOpen} onClose={handleCloseChatbot} />
        <QuoteCalculator isOpen={isQuoteOpen} onClose={handleCloseQuote} />
