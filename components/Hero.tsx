@@ -54,6 +54,15 @@ const Hero: React.FC<HeroProps> = ({ id = 'hero', onCTAClick }) => {
       </div>
       <div className="absolute inset-0 bg-neutral-950/60 z-0"></div>
       <div className="relative z-10 max-w-6xl mx-auto px-4">
+        {/* Logo Corporativo */}
+        <div className="mb-6 sm:mb-8 flex justify-center">
+          <img 
+            src="/images/logo-voltaic.png?v=1" 
+            alt="Logo Voltaic" 
+            className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain drop-shadow-lg"
+          />
+        </div>
+        
         <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase leading-tight">
           Energía Solar para un
           <br />

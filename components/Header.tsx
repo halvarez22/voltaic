@@ -48,8 +48,12 @@ const Header: React.FC<HeaderProps> = ({ onNavClick, activeSection }) => {
   return (
     <header className={headerClasses}>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <button onClick={() => handleLinkClick('hero')} className="text-2xl font-black text-white tracking-wider focus:outline-none">
-          <span className="text-brand-yellow">VOLTAIC</span>
+        <button onClick={() => handleLinkClick('hero')} className="focus:outline-none">
+          <img 
+            src="/images/logo-voltaic.png?v=1" 
+            alt="Voltaic - Energía Solar" 
+            className="h-8 sm:h-10 w-auto object-contain hover:opacity-80 transition-opacity duration-300"
+          />
         </button>
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
