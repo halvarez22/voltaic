@@ -42,241 +42,15 @@ const benefits = [
   }
 ];
 
-const VerticalNavDots: React.FC<{ count: number, activeIndex: number, onDotClick: (index: number) => void }> = ({ count, activeIndex, onDotClick }) => (
-  <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4 z-30">
-    {Array.from({ length: count }).map((_, index) => (
-      <button
-        key={index}
-        onClick={() => onDotClick(index)}
-        className={`w-4 h-4 rounded-full transition-all duration-300 flex items-center justify-center ${
-          activeIndex === index 
-            ? 'bg-brand-yellow scale-125 ring-2 ring-offset-2 ring-brand-yellow/50' 
-            : 'bg-white/50 hover:bg-white/80'
-        }`}
-        aria-label={`Ir al beneficio ${index + 1}`}
-      >
-        <span className={`w-2 h-2 rounded-full ${activeIndex === index ? 'bg-neutral-900' : 'bg-transparent'}`}></span>
-      </button>
-    ))}
-  </div>
-);
-
-const BenefitCard: React.FC<{ 
-  title: string; 
-  description: string; 
-  imageUrl: string; 
-  isVisible: boolean;
-  icon: React.ReactNode;
-  index: number;
-  total: number;
-  onNext: () => void;
-  onPrev: () => void;
-}> = ({ 
-  title, 
-  description, 
-  imageUrl, 
-  isVisible, 
-  icon,
-  index,
-  total,
-  onNext,
-  onPrev
-}) => {
-  const contentClasses = `transition-all duration-700 ease-out ${
-    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-  }`;
-  
-  return (
-    <div className="h-full w-full flex-shrink-0 flex items-center justify-center p-4 md:p-8">
-      <div className={`w-full max-w-6xl mx-auto ${contentClasses}`}>
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-          <div className="md:flex">
-            <div className="md:w-1/2 relative">
-              <LazyImage
-                src={imageUrl}
-                alt={title}
-                className="w-full h-64 md:h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent md:bg-gradient-to-r"></div>
-              <div className="absolute bottom-0 left-0 p-6 text-white">
-                <div className="w-16 h-16 rounded-xl bg-brand-yellow/20 backdrop-blur-sm flex items-center justify-center mb-4">
-                  <div className="text-brand-yellow">
-                    {icon}
-                  </div>
-                </div>
-                <h3 className="text-2xl md:text-3xl font-bold">{title}</h3>
-              </div>
-            </div>
-            
-            <div className="p-8 md:w-1/2 bg-gradient-to-br from-neutral-900/90 to-neutral-800/90">
-              <div className="h-full flex flex-col">
-                <p className="text-neutral-300 leading-relaxed mb-8 flex-1">{description}</p>
-                
-                <div className="flex items-center justify-between pt-6 border-t border-white/10">
-                  <div className="text-sm text-neutral-400">
-                    {index + 1} / {total} Beneficios
-                  </div>
-                  <div className="flex gap-3">
-                    <button 
-                      onClick={onPrev}
-                      className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-colors"
-                      aria-label="Beneficio anterior"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                    <button 
-                      onClick={onNext}
-                      className="w-10 h-10 rounded-full bg-brand-yellow hover:bg-yellow-400 text-neutral-900 flex items-center justify-center transition-colors"
-                      aria-label="Siguiente beneficio"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const BenefitsSection: React.FC<{ id?: string }> = ({ id = 'beneficios' }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const autoScrollRef = useRef<number>();
-  const isScrolling = useRef(false);
-  const startY = useRef(0);
-  const touchStartY = useRef(0);
-
-  const goToIndex = (index: number) => {
-    if (index < 0) index = benefits.length - 1;
-    if (index >= benefits.length) index = 0;
-    setCurrentIndex(index);
-    resetAutoScroll();
-  };
-
-  const nextSlide = () => goToIndex(currentIndex + 1);
-  const prevSlide = () => goToIndex(currentIndex - 1);
-
-  const resetAutoScroll = () => {
-    if (autoScrollRef.current) {
-      clearTimeout(autoScrollRef.current);
-    }
-    autoScrollRef.current = window.setTimeout(() => {
-      nextSlide();
-    }, 10000); // 10 segundos para cada diapositiva
-  };
-
-  const handleWheel = (e: WheelEvent) => {
-    if (isScrolling.current) {
-      e.preventDefault();
-      return;
-    }
-    
-    isScrolling.current = true;
-    
-    if (e.deltaY > 0) {
-      nextSlide();
-    } else {
-      prevSlide();
-    }
-    
-    setTimeout(() => {
-      isScrolling.current = false;
-    }, 1000);
-    
-    e.preventDefault();
-  };
-
-  const handleTouchStart = (e: TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
-  };
-
-  const handleTouchMove = (e: TouchEvent) => {
-    if (isScrolling.current) return;
-    
-    const touchY = e.touches[0].clientY;
-    const diff = touchStartY.current - touchY;
-    
-    if (Math.abs(diff) > 30) { // Umbral de desplazamiento reducido
-      isScrolling.current = true;
-      
-      if (diff > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-      
-      setTimeout(() => {
-        isScrolling.current = false;
-      }, 1000);
-    }
-    
-    e.preventDefault();
-  };
-
-  // Efecto para manejar eventos de navegación
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    
-    // Configurar listeners para navegación táctil y con rueda
-    const options: AddEventListenerOptions = { passive: false };
-    
-    // Función auxiliar para manejar el evento de rueda
-    const wheelHandler = (e: Event) => {
-      const wheelEvent = e as WheelEvent;
-      handleWheel(wheelEvent);
-    };
-    
-    // Función auxiliar para manejar el evento táctil de inicio
-    const touchStartHandler = (e: Event) => {
-      const touchEvent = e as TouchEvent;
-      handleTouchStart(touchEvent);
-    };
-    
-    // Función auxiliar para manejar el evento táctil de movimiento
-    const touchMoveHandler = (e: Event) => {
-      const touchEvent = e as TouchEvent;
-      handleTouchMove(touchEvent);
-    };
-    
-    // Agregar event listeners
-    section.addEventListener('wheel', wheelHandler, options);
-    section.addEventListener('touchstart', touchStartHandler, options);
-    section.addEventListener('touchmove', touchMoveHandler, options);
-    
-    // Iniciar auto-desplazamiento
-    resetAutoScroll();
-    
-    // Limpieza al desmontar
-    return () => {
-      section.removeEventListener('wheel', wheelHandler);
-      section.removeEventListener('touchstart', touchStartHandler);
-      section.removeEventListener('touchmove', touchMoveHandler);
-      
-      if (autoScrollRef.current) {
-        clearTimeout(autoScrollRef.current);
-      }
-    };
-  }, [currentIndex]);
-
-  // Efecto para actualizar el título de la pestaña
-  useEffect(() => {
-    document.title = `${benefits[currentIndex].title} | Voltaic Energía Solar`;
-  }, [currentIndex]);
+  // Mostrar solo el primer beneficio (Ahorro en tu Factura) permanentemente
+  const currentBenefit = benefits[0]; // Siempre mostrar "Ahorro en tu Factura"
 
   return (
     <section 
-      ref={sectionRef}
       id={id}
-      className="flex-shrink-0 w-screen h-full relative overflow-hidden bg-neutral-900"
+      className="flex-shrink-0 w-screen h-full flex items-center justify-center p-4 sm:p-6 relative overflow-hidden bg-neutral-900"
     >
       {/* Fondo con efecto de desenfoque */}
       <div className="absolute inset-0 w-full h-full">
@@ -288,39 +62,66 @@ const BenefitsSection: React.FC<{ id?: string }> = ({ id = 'beneficios' }) => {
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/95 to-neutral-800/95"></div>
       </div>
       
-      <div className="relative z-10 h-full">
-        <div className="h-full">
-          {benefits.map((benefit, index) => (
-            <BenefitCard
-              key={benefit.title}
-              title={benefit.title}
-              description={benefit.description}
-              imageUrl={benefit.imageUrl}
-              isVisible={index === currentIndex}
-              icon={benefit.icon}
-              index={index}
-              total={benefits.length}
-              onNext={nextSlide}
-              onPrev={prevSlide}
-            />
-          ))}
-          
-          <VerticalNavDots 
-            count={benefits.length} 
-            activeIndex={currentIndex} 
-            onDotClick={goToIndex} 
-          />
-        </div>
-        
-        {/* Indicador de progreso */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10">
-          <div 
-            className="h-full bg-brand-yellow transition-all duration-1000 ease-out"
-            style={{
-              width: `${((currentIndex + 1) / benefits.length) * 100}%`,
-              transitionProperty: 'width'
-            }}
-          ></div>
+      <div className="relative z-10 w-full max-w-6xl mx-auto">
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+          <div className="md:flex">
+            <div className="md:w-1/2 relative">
+              <LazyImage
+                src={currentBenefit.imageUrl}
+                alt={currentBenefit.title}
+                className="w-full h-64 md:h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent md:bg-gradient-to-r"></div>
+              <div className="absolute bottom-0 left-0 p-6 text-white">
+                <div className="w-16 h-16 rounded-xl bg-brand-yellow/20 backdrop-blur-sm flex items-center justify-center mb-4">
+                  <div className="text-brand-yellow">
+                    {currentBenefit.icon}
+                  </div>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold">{currentBenefit.title}</h3>
+              </div>
+            </div>
+            
+            <div className="p-6 md:p-8 md:w-1/2 bg-gradient-to-br from-neutral-900/90 to-neutral-800/90">
+              <div className="h-full flex flex-col">
+                <p className="text-neutral-300 leading-relaxed mb-6 sm:mb-8 flex-1 text-sm sm:text-base">
+                  {currentBenefit.description}
+                </p>
+                
+                {/* Información adicional sobre ahorro */}
+                <div className="bg-brand-yellow/10 border border-brand-yellow/20 rounded-lg p-4 mb-6">
+                  <h4 className="text-brand-yellow font-bold text-lg mb-2">💰 Ahorro Garantizado</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-neutral-300">Ahorro mensual:</span>
+                      <span className="text-brand-yellow font-bold">Hasta 90%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-300">Recuperación:</span>
+                      <span className="text-brand-yellow font-bold">3-5 años</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-300">Garantía:</span>
+                      <span className="text-brand-yellow font-bold">25 años</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-300">ROI:</span>
+                      <span className="text-brand-yellow font-bold">300-500%</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <div className="text-sm text-neutral-400 mb-2">
+                    Beneficio Principal
+                  </div>
+                  <div className="w-full h-1 bg-white/10 rounded-full">
+                    <div className="h-full bg-brand-yellow rounded-full" style={{ width: '100%' }}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

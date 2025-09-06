@@ -188,24 +188,24 @@ Estimaciones calculadas:
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-neutral-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-neutral-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="bg-gradient-to-r from-brand-yellow to-yellow-400 p-6 rounded-t-xl">
+        <div className="bg-gradient-to-r from-brand-yellow to-yellow-400 p-4 sm:p-6 rounded-t-xl">
           <div className="flex justify-between items-center">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900">
+            <div className="flex-1 pr-4">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 leading-tight">
                 🧮 Calculadora Solar Voltaic
               </h2>
-              <p className="text-neutral-700 mt-1">
+              <p className="text-neutral-700 mt-1 text-sm sm:text-base">
                 Obtén tu precotización en 24 horas
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-neutral-600 hover:text-neutral-900 transition-colors"
+              className="text-neutral-600 hover:text-neutral-900 transition-colors flex-shrink-0"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -213,24 +213,24 @@ Estimaciones calculadas:
         </div>
 
         {/* Progress Bar */}
-        <div className="px-6 py-4 bg-neutral-50">
-          <div className="flex items-center justify-between mb-2">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 bg-neutral-50">
+          <div className="flex items-center justify-between mb-2 overflow-x-auto">
             {steps.map((step) => (
-              <div key={step.number} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+              <div key={step.number} className="flex items-center flex-shrink-0">
+                <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold ${
                   currentStep >= step.number 
                     ? 'bg-brand-yellow text-neutral-900' 
                     : 'bg-neutral-300 text-neutral-600'
                 }`}>
                   {step.number}
                 </div>
-                <span className={`ml-2 text-sm font-medium ${
+                <span className={`ml-1 sm:ml-2 text-xs sm:text-sm font-medium whitespace-nowrap ${
                   currentStep >= step.number ? 'text-neutral-900' : 'text-neutral-500'
                 }`}>
                   {step.title}
                 </span>
                 {step.number < 4 && (
-                  <div className={`w-8 h-0.5 mx-2 ${
+                  <div className={`w-4 sm:w-8 h-0.5 mx-1 sm:mx-2 ${
                     currentStep > step.number ? 'bg-brand-yellow' : 'bg-neutral-300'
                   }`} />
                 )}
@@ -246,7 +246,7 @@ Estimaciones calculadas:
         </div>
 
         {/* Form Content */}
-        <form onSubmit={handleSubmit} className="p-6">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6">
           {submitSuccess ? (
             <div className="text-center py-12">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -292,8 +292,8 @@ Estimaciones calculadas:
             <>
               {/* Step 1: Información Básica */}
               {currentStep === 1 && (
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-neutral-900 mb-4">🏠 Información Básica</h3>
+                <div className="space-y-4 sm:space-y-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mb-3 sm:mb-4">🏠 Información Básica</h3>
                   
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 mb-2">
@@ -326,7 +326,7 @@ Estimaciones calculadas:
                       value={quoteData.location}
                       onChange={(e) => handleInputChange('location', e.target.value)}
                       placeholder="Ciudad, Estado"
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900 placeholder-neutral-500"
                       required
                     />
                   </div>
@@ -338,7 +338,7 @@ Estimaciones calculadas:
                     <select
                       value={quoteData.availableArea}
                       onChange={(e) => handleInputChange('availableArea', e.target.value)}
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900"
                     >
                       <option value="">Selecciona una opción</option>
                       <option value="menos-50">Menos de 50 m²</option>
@@ -353,8 +353,8 @@ Estimaciones calculadas:
 
               {/* Step 2: Consumo Eléctrico */}
               {currentStep === 2 && (
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-neutral-900 mb-4">⚡ Consumo Eléctrico</h3>
+                <div className="space-y-4 sm:space-y-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mb-3 sm:mb-4">⚡ Consumo Eléctrico</h3>
                   
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 mb-2">
@@ -385,7 +385,7 @@ Estimaciones calculadas:
                     <select
                       value={quoteData.monthlySpend}
                       onChange={(e) => handleInputChange('monthlySpend', e.target.value)}
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900"
                       required
                     >
                       <option value="">Selecciona tu gasto mensual</option>
@@ -406,7 +406,7 @@ Estimaciones calculadas:
                     <select
                       value={quoteData.peakHours}
                       onChange={(e) => handleInputChange('peakHours', e.target.value)}
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900"
                     >
                       <option value="">Selecciona una opción</option>
                       <option value="mañana">Mañana (6:00 - 12:00)</option>
@@ -420,8 +420,8 @@ Estimaciones calculadas:
 
               {/* Step 3: Objetivos */}
               {currentStep === 3 && (
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-neutral-900 mb-4">🎯 Objetivos</h3>
+                <div className="space-y-4 sm:space-y-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mb-3 sm:mb-4">🎯 Objetivos</h3>
                   
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 mb-2">
@@ -430,7 +430,7 @@ Estimaciones calculadas:
                     <select
                       value={quoteData.desiredSavings}
                       onChange={(e) => handleInputChange('desiredSavings', e.target.value)}
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900"
                       required
                     >
                       <option value="">Selecciona tu objetivo de ahorro</option>
@@ -449,7 +449,7 @@ Estimaciones calculadas:
                     <select
                       value={quoteData.budget}
                       onChange={(e) => handleInputChange('budget', e.target.value)}
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900"
                     >
                       <option value="">Selecciona tu presupuesto</option>
                       <option value="50-100k">$50,000 - $100,000</option>
@@ -467,7 +467,7 @@ Estimaciones calculadas:
                     <select
                       value={quoteData.timeline}
                       onChange={(e) => handleInputChange('timeline', e.target.value)}
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900"
                     >
                       <option value="">Selecciona una opción</option>
                       <option value="inmediato">Inmediato</option>
@@ -480,30 +480,30 @@ Estimaciones calculadas:
 
                   {/* Cálculos en tiempo real */}
                   {calculations.estimatedSavings > 0 && (
-                    <div className="bg-gradient-to-r from-brand-yellow/10 to-yellow-400/10 border border-brand-yellow/20 rounded-lg p-4">
-                      <h4 className="font-semibold text-neutral-900 mb-3">📊 Estimaciones calculadas:</h4>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
+                    <div className="bg-gradient-to-r from-brand-yellow/10 to-yellow-400/10 border border-brand-yellow/20 rounded-lg p-3 sm:p-4">
+                      <h4 className="font-semibold text-neutral-900 mb-2 sm:mb-3 text-sm sm:text-base">📊 Estimaciones calculadas:</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm">
+                        <div className="flex flex-col sm:flex-row sm:items-center">
                           <span className="text-neutral-600">Ahorro estimado:</span>
-                          <span className="font-bold text-brand-yellow ml-2">
+                          <span className="font-bold text-brand-yellow sm:ml-2">
                             ${calculations.estimatedSavings.toLocaleString()}/mes
                           </span>
                         </div>
-                        <div>
+                        <div className="flex flex-col sm:flex-row sm:items-center">
                           <span className="text-neutral-600">Potencia recomendada:</span>
-                          <span className="font-bold text-brand-yellow ml-2">
+                          <span className="font-bold text-brand-yellow sm:ml-2">
                             {calculations.recommendedPower} kW
                           </span>
                         </div>
-                        <div>
+                        <div className="flex flex-col sm:flex-row sm:items-center">
                           <span className="text-neutral-600">Inversión aproximada:</span>
-                          <span className="font-bold text-brand-yellow ml-2">
+                          <span className="font-bold text-brand-yellow sm:ml-2">
                             ${calculations.estimatedInvestment.toLocaleString()}
                           </span>
                         </div>
-                        <div>
+                        <div className="flex flex-col sm:flex-row sm:items-center">
                           <span className="text-neutral-600">Recuperación:</span>
-                          <span className="font-bold text-brand-yellow ml-2">
+                          <span className="font-bold text-brand-yellow sm:ml-2">
                             {calculations.paybackPeriod} años
                           </span>
                         </div>
@@ -515,8 +515,8 @@ Estimaciones calculadas:
 
               {/* Step 4: Contacto */}
               {currentStep === 4 && (
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-neutral-900 mb-4">📞 Información de Contacto</h3>
+                <div className="space-y-4 sm:space-y-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mb-3 sm:mb-4">📞 Información de Contacto</h3>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -527,8 +527,8 @@ Estimaciones calculadas:
                         type="text"
                         value={quoteData.fullName}
                         onChange={(e) => handleInputChange('fullName', e.target.value)}
-                        placeholder="Tu nombre completo"
-                        className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      placeholder="Tu nombre completo"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900 placeholder-neutral-500"
                         required
                       />
                     </div>
@@ -541,8 +541,8 @@ Estimaciones calculadas:
                         type="tel"
                         value={quoteData.phone}
                         onChange={(e) => handleInputChange('phone', e.target.value)}
-                        placeholder="(55) 1234-5678"
-                        className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      placeholder="(55) 1234-5678"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900 placeholder-neutral-500"
                         required
                       />
                     </div>
@@ -557,7 +557,7 @@ Estimaciones calculadas:
                       value={quoteData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
                       placeholder="tu@email.com"
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900 placeholder-neutral-500"
                       required
                     />
                   </div>
@@ -569,7 +569,7 @@ Estimaciones calculadas:
                     <select
                       value={quoteData.bestTime}
                       onChange={(e) => handleInputChange('bestTime', e.target.value)}
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-yellow focus:border-transparent bg-white text-neutral-900"
                     >
                       <option value="">Selecciona una opción</option>
                       <option value="mañana">Mañana (9:00 - 12:00)</option>
@@ -580,29 +580,29 @@ Estimaciones calculadas:
                   </div>
 
                   {/* Resumen final */}
-                  <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-4">
-                    <h4 className="font-semibold text-neutral-900 mb-3">📋 Resumen de tu cotización:</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
+                  <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-3 sm:p-4">
+                    <h4 className="font-semibold text-neutral-900 mb-2 sm:mb-3 text-sm sm:text-base">📋 Resumen de tu cotización:</h4>
+                    <div className="space-y-2 text-xs sm:text-sm">
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
                         <span className="text-neutral-600">Tipo de propiedad:</span>
-                        <span className="font-medium">{quoteData.propertyType}</span>
+                        <span className="font-medium text-neutral-900">{quoteData.propertyType}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
                         <span className="text-neutral-600">Ubicación:</span>
-                        <span className="font-medium">{quoteData.location}</span>
+                        <span className="font-medium text-neutral-900">{quoteData.location}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
                         <span className="text-neutral-600">Gasto mensual:</span>
-                        <span className="font-medium">{quoteData.monthlySpend}</span>
+                        <span className="font-medium text-neutral-900">{quoteData.monthlySpend}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
                         <span className="text-neutral-600">Ahorro deseado:</span>
-                        <span className="font-medium">{quoteData.desiredSavings}%</span>
+                        <span className="font-medium text-neutral-900">{quoteData.desiredSavings}%</span>
                       </div>
                       {calculations.estimatedSavings > 0 && (
                         <>
                           <div className="border-t pt-2 mt-2">
-                            <div className="flex justify-between text-brand-yellow font-bold">
+                            <div className="flex flex-col sm:flex-row sm:justify-between text-brand-yellow font-bold">
                               <span>Ahorro estimado:</span>
                               <span>${calculations.estimatedSavings.toLocaleString()}/mes</span>
                             </div>
@@ -615,12 +615,12 @@ Estimaciones calculadas:
               )}
 
               {/* Navigation Buttons */}
-              <div className="flex justify-between pt-6 border-t border-neutral-200">
+              <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 pt-4 sm:pt-6 border-t border-neutral-200">
                 <button
                   type="button"
                   onClick={prevStep}
                   disabled={currentStep === 1}
-                  className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                  className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all text-sm sm:text-base ${
                     currentStep === 1
                       ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
                       : 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300'
@@ -633,7 +633,7 @@ Estimaciones calculadas:
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="px-6 py-3 bg-brand-yellow text-neutral-900 rounded-lg font-medium hover:bg-yellow-300 transition-all"
+                    className="px-4 sm:px-6 py-2 sm:py-3 bg-brand-yellow text-neutral-900 rounded-lg font-medium hover:bg-yellow-300 transition-all text-sm sm:text-base"
                   >
                     Siguiente
                   </button>
@@ -641,7 +641,7 @@ Estimaciones calculadas:
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`px-8 py-3 rounded-lg font-medium transition-all ${
+                    className={`px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-medium transition-all text-sm sm:text-base ${
                       isSubmitting
                         ? 'bg-neutral-400 text-white cursor-not-allowed'
                         : 'bg-brand-yellow text-neutral-900 hover:bg-yellow-300'
