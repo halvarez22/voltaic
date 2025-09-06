@@ -18,12 +18,5 @@
         }
       ]
     }
-  ],
-  "env": {
-    "VITE_GEMINI_API_KEY": "@vite_gemini_api_key",
-    "VITE_GROQ_API_KEY": "@vite_groq_api_key",
-    "VITE_EMAILJS_SERVICE_ID": "@vite_emailjs_service_id",
-    "VITE_EMAILJS_TEMPLATE_ID": "@vite_emailjs_template_id",
-    "VITE_EMAILJS_PUBLIC_KEY": "@vite_emailjs_public_key"
-  }
+  ]
 }
