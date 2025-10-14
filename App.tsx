@@ -29,6 +29,7 @@ const sectionsInfo = [
 const easeOutBounce = (x: number): number => {
     const n1 = 7.5625;
     const d1 = 2.75;
+    
     if (x < 1 / d1) {
         return n1 * x * x;
     } else if (x < 2 / d1) {
@@ -140,6 +141,11 @@ const App: React.FC = () => {
     const mainEl = mainContainerRef.current;
     if (!mainEl) return;
 
+    // Variables para mejorar la experiencia
+    let lastScrollTime = 0;
+    let scrollVelocity = 0;
+    let lastScrollLeft = 0;
+
     const onMouseDown = (e: MouseEvent) => {
       if (isAnimating.current) return;
 
@@ -160,9 +166,12 @@ const App: React.FC = () => {
       dragState.current.isDown = true;
       mainEl.classList.add('active:cursor-grabbing');
       mainEl.style.userSelect = 'none';
+      mainEl.style.scrollBehavior = 'auto';
       dragState.current.startX = e.pageX - mainEl.offsetLeft;
       dragState.current.scrollLeft = mainEl.scrollLeft;
-      mainEl.style.scrollBehavior = 'auto';
+      
+      // Mejorar la experiencia visual
+      mainEl.style.transition = 'none';
     };
 
     const onMouseLeaveOrUp = () => {
@@ -189,16 +198,103 @@ const App: React.FC = () => {
             mainEl.scrollLeft = clientWidth;
             setTimeout(() => { mainEl.style.scrollBehavior = 'smooth'; }, 50);
         }
+        mainEl.style.transition = '';
       };
       
-      animateScroll(targetScrollLeft, 800, onAnimationComplete);
+      // Animación más espectacular con duración variable según distancia
+      const distance = Math.abs(targetScrollLeft - scrollLeft);
+      const duration = Math.min(Math.max(distance * 0.8, 600), 1200);
+      animateScroll(targetScrollLeft, duration, onAnimationComplete);
     };
 
     const onMouseMove = (e: MouseEvent) => {
       if (!dragState.current.isDown) return;
       e.preventDefault();
+      
       const x = e.pageX - mainEl.offsetLeft;
-      const walk = (x - dragState.current.startX) * 2;
+      const walk = (x - dragState.current.startX) * 2.5; // Sensibilidad mejorada
+      mainEl.scrollLeft = dragState.current.scrollLeft - walk;
+      
+      // Calcular velocidad para efectos visuales
+      const now = Date.now();
+      if (now - lastScrollTime > 16) { // 60fps
+        scrollVelocity = Math.abs(mainEl.scrollLeft - lastScrollLeft);
+        lastScrollLeft = mainEl.scrollLeft;
+        lastScrollTime = now;
+      }
+    };
+
+    // Eventos táctiles mejorados para móvil
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1 && !isAnimating.current) {
+        const touch = e.touches[0];
+        const target = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement;
+        const verticalSection = target?.closest<HTMLElement>('.vertical-scroll-section');
+
+        if (verticalSection) {
+            const hasScrollbar = verticalSection.scrollHeight > verticalSection.clientHeight;
+            if (hasScrollbar) {
+                const scrollbarWidth = verticalSection.offsetWidth - verticalSection.clientWidth;
+                const rect = verticalSection.getBoundingClientRect();
+                if (touch.clientX >= rect.right - scrollbarWidth) {
+                    return;
+                }
+            }
+        }
+
+        dragState.current.isDown = true;
+        mainEl.style.userSelect = 'none';
+        mainEl.style.scrollBehavior = 'auto';
+        mainEl.style.transition = 'none';
+        dragState.current.startX = touch.pageX - mainEl.offsetLeft;
+        dragState.current.scrollLeft = mainEl.scrollLeft;
+        
+        // Feedback táctil mejorado
+        if ('vibrate' in navigator) {
+          navigator.vibrate(10); // Vibración sutil
+        }
+      }
+    };
+
+    const onTouchEnd = () => {
+      if (!dragState.current.isDown) return;
+      
+      dragState.current.isDown = false;
+      mainEl.style.userSelect = 'auto';
+
+      const { scrollLeft, clientWidth } = mainEl;
+      const pageIndex = Math.round(scrollLeft / clientWidth);
+      const targetScrollLeft = pageIndex * clientWidth;
+      
+      const onAnimationComplete = () => {
+        const numRealSections = sectionsInfo.length;
+        const currentPage = Math.round(mainEl.scrollLeft / clientWidth);
+
+        if (currentPage === 0) {
+            mainEl.style.scrollBehavior = 'auto';
+            mainEl.scrollLeft = clientWidth * numRealSections;
+            setTimeout(() => { mainEl.style.scrollBehavior = 'smooth'; }, 50);
+        } else if (currentPage === numRealSections + 1) {
+            mainEl.style.scrollBehavior = 'auto';
+            mainEl.scrollLeft = clientWidth;
+            setTimeout(() => { mainEl.style.scrollBehavior = 'smooth'; }, 50);
+        }
+        mainEl.style.transition = '';
+      };
+      
+      // Animación más espectacular para móvil
+      const distance = Math.abs(targetScrollLeft - scrollLeft);
+      const duration = Math.min(Math.max(distance * 0.6, 500), 1000);
+      animateScroll(targetScrollLeft, duration, onAnimationComplete);
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!dragState.current.isDown || e.touches.length !== 1) return;
+      e.preventDefault();
+      
+      const touch = e.touches[0];
+      const x = touch.pageX - mainEl.offsetLeft;
+      const walk = (x - dragState.current.startX) * 2.2; // Sensibilidad optimizada para móvil
       mainEl.scrollLeft = dragState.current.scrollLeft - walk;
     };
     
@@ -221,10 +317,17 @@ const App: React.FC = () => {
         setActiveSection(currentSectionId);
     };
 
-    mainEl.addEventListener('mousedown', onMouseDown);
-    mainEl.addEventListener('mouseleave', onMouseLeaveOrUp);
-    mainEl.addEventListener('mouseup', onMouseLeaveOrUp);
-    mainEl.addEventListener('mousemove', onMouseMove);
+    // Event listeners con mejor configuración
+    mainEl.addEventListener('mousedown', onMouseDown, { passive: false });
+    mainEl.addEventListener('mouseleave', onMouseLeaveOrUp, { passive: true });
+    mainEl.addEventListener('mouseup', onMouseLeaveOrUp, { passive: true });
+    mainEl.addEventListener('mousemove', onMouseMove, { passive: false });
+    
+    // Eventos táctiles optimizados
+    mainEl.addEventListener('touchstart', onTouchStart, { passive: true });
+    mainEl.addEventListener('touchend', onTouchEnd, { passive: true });
+    mainEl.addEventListener('touchmove', onTouchMove, { passive: false });
+    
     mainEl.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
@@ -232,6 +335,11 @@ const App: React.FC = () => {
       mainEl.removeEventListener('mouseleave', onMouseLeaveOrUp);
       mainEl.removeEventListener('mouseup', onMouseLeaveOrUp);
       mainEl.removeEventListener('mousemove', onMouseMove);
+      
+      mainEl.removeEventListener('touchstart', onTouchStart);
+      mainEl.removeEventListener('touchend', onTouchEnd);
+      mainEl.removeEventListener('touchmove', onTouchMove);
+      
       mainEl.removeEventListener('scroll', onScroll);
     };
   }, [animateScroll]);
@@ -247,7 +355,7 @@ const App: React.FC = () => {
        <div className="relative z-20">
          <Header onNavClick={handleNavClick} activeSection={activeSection} />
       </div>
-      <main ref={mainContainerRef} id="main-container" className="flex-1 flex w-full overflow-x-auto cursor-grab relative z-10 touch-pan-x">
+      <main ref={mainContainerRef} id="main-container" className="flex-1 flex w-full overflow-x-auto cursor-grab relative z-10 scrollbar-hide select-none" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {renderedSections}
       </main>
       <div className="relative z-20">

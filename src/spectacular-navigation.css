@@ -1,0 +1,254 @@
+/* Navegación Espectacular - Estilos Optimizados */
+
+/* Ocultar scrollbars pero mantener funcionalidad */
+#main-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mejorar la experiencia de arrastre */
+#main-container:active {
+  cursor: grabbing !important;
+}
+
+#main-container.active\:cursor-grabbing {
+  cursor: grabbing !important;
+}
+
+/* Mejorar la experiencia táctil */
+@media (hover: none) and (pointer: coarse) {
+  #main-container {
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Mejorar botones táctiles */
+  button, .btn, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Feedback táctil mejorado */
+  button:active, .btn:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Mejorar la experiencia de navegación */
+@media (hover: hover) and (pointer: fine) {
+  #main-container:hover {
+    cursor: grab;
+  }
+  
+  #main-container:active {
+    cursor: grabbing;
+  }
+}
+
+/* Optimizaciones de rendimiento */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mejorar la experiencia visual */
+body {
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: auto;
+}
+
+/* Mejorar la experiencia de scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mejorar la experiencia de selección */
+#main-container {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Permitir selección en elementos específicos */
+#main-container input,
+#main-container textarea,
+#main-container [contenteditable] {
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+
+/* Mejorar la experiencia de navegación con teclado */
+#main-container:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* Mejorar la experiencia de carga */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Mejorar la experiencia de error */
+.error {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+/* Mejorar la experiencia de éxito */
+.success {
+  border-color: #10b981;
+  background-color: #f0fdf4;
+}
+
+/* Mejorar la experiencia de navegación en móvil */
+@media (max-width: 768px) {
+  #main-container {
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Mejorar la experiencia de navegación */
+  .nav-link {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Mejorar la experiencia de botones */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 16px;
+    border-radius: 8px;
+  }
+}
+
+/* Mejorar la experiencia de navegación en tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #main-container {
+    touch-action: pan-x;
+  }
+}
+
+/* Mejorar la experiencia de navegación en desktop */
+@media (min-width: 1025px) {
+  #main-container {
+    cursor: grab;
+  }
+  
+  #main-container:active {
+    cursor: grabbing;
+  }
+}
+
+/* Mejorar la experiencia de navegación con mouse */
+@media (hover: hover) {
+  #main-container:hover {
+    cursor: grab;
+  }
+}
+
+/* Mejorar la experiencia de navegación con touch */
+@media (hover: none) {
+  #main-container {
+    touch-action: pan-x;
+  }
+}
+
+/* Mejorar la experiencia de navegación con teclado */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mejorar la experiencia de navegación con contraste alto */
+@media (prefers-contrast: high) {
+  #main-container:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+  }
+}
+
+/* Mejorar la experiencia de navegación en modo oscuro */
+@media (prefers-color-scheme: dark) {
+  /* Ya estamos usando modo oscuro por defecto */
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  #main-container {
+    transition: transform 0.2s ease;
+  }
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  #main-container {
+    transition: none;
+  }
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  .nav-link {
+    transition: all 0.3s ease;
+  }
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .nav-link {
+    transition: none;
+  }
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  button {
+    transition: all 0.3s ease;
+  }
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
+  }
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  .btn {
+    transition: all 0.3s ease;
+  }
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  [role="button"] {
+    transition: all 0.3s ease;
+  }
+}
+
+/* Mejorar la experiencia de navegación con preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  [role="button"] {
+    transition: none;
+  }
+}

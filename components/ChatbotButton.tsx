@@ -8,7 +8,7 @@ const ChatbotButton: React.FC<ChatbotButtonProps> = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 bg-brand-yellow hover:bg-yellow-300 text-neutral-900 p-3 sm:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 group"
+      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 bg-brand-yellow hover:bg-yellow-300 active:bg-yellow-400 text-neutral-900 p-3 sm:p-4 rounded-full shadow-lg hover:shadow-xl active:shadow-md transition-all duration-300 transform hover:scale-110 active:scale-95 group touch-manipulation"
       aria-label="Abrir asistente virtual"
     >
       <svg 

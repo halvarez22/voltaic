@@ -188,8 +188,8 @@ Estimaciones calculadas:
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-neutral-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-neutral-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-1 sm:p-2 md:p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[98vh] sm:max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="bg-gradient-to-r from-brand-yellow to-yellow-400 p-4 sm:p-6 rounded-t-xl">
           <div className="flex justify-between items-center">

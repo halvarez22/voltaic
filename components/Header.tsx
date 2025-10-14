@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ onNavClick, activeSection }) => {
 
   return (
     <header className={headerClasses}>
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
         <button onClick={() => handleLinkClick('hero')} className="focus:outline-none">
           <img 
             src="/images/logo-voltaic.png?v=1" 
@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({ onNavClick, activeSection }) => {
         <div className="md:hidden">
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
-            className="text-white focus:outline-none" 
+            className="text-white focus:outline-none p-2 -m-2 touch-manipulation" 
             aria-label="Abrir menú" 
             aria-expanded={isMenuOpen}
           >
@@ -85,14 +85,14 @@ const Header: React.FC<HeaderProps> = ({ onNavClick, activeSection }) => {
         </div>
       </div>
       {isMenuOpen && (
-        <div className="md:hidden bg-neutral-800">
-          <nav className="flex flex-col items-center space-y-4 py-4">
+        <div className="md:hidden bg-neutral-800/95 backdrop-blur-sm border-t border-neutral-700">
+          <nav className="flex flex-col items-center space-y-3 py-4">
             {navLinks.map((link) => (
               <button
                 key={link.name} 
                 onClick={() => handleLinkClick(link.id)}
-                className={`text-neutral-300 hover:text-brand-yellow transition-colors duration-300 font-semibold text-lg ${
-                  activeSection === link.id ? 'text-brand-yellow' : ''
+                className={`text-neutral-300 hover:text-brand-yellow active:text-brand-yellow transition-colors duration-300 font-semibold text-lg py-2 px-4 rounded-lg touch-manipulation ${
+                  activeSection === link.id ? 'text-brand-yellow bg-neutral-700/50' : 'hover:bg-neutral-700/30'
                 }`}
                  aria-current={activeSection === link.id ? 'page' : undefined}
               >

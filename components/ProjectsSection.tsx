@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import LazyImage from './LazyImage';
+import VideoModal from './VideoModal';
 import type { Project } from '../types';
 
 // Importar imágenes locales
@@ -70,42 +71,72 @@ const projects: Project[] = [
   },
 ];
 
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => (
-  <div className="h-80 sm:h-96 rounded-xl overflow-hidden shadow-lg bg-neutral-800 group transition-all duration-300 hover:shadow-2xl hover:shadow-brand-yellow/20">
-    <div className="h-32 sm:h-48 overflow-hidden">
-      <LazyImage
-        src={project.image}
-        alt={`Proyecto ${project.title}`}
-        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-      />
-    </div>
-    
-    <div className="p-4 sm:p-6">
-      <div className="flex justify-between items-start mb-2">
-        <h3 className="text-lg sm:text-xl font-bold text-white leading-tight">{project.title}</h3>
-        <span className="bg-brand-yellow/20 text-brand-yellow text-xs font-semibold px-2 sm:px-3 py-1 rounded-full ml-2">
-          {project.year}
-        </span>
+const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const isSapalProject = project.title === 'SAPAL';
+
+  return (
+    <>
+      <div className="h-80 sm:h-96 rounded-xl overflow-hidden shadow-lg bg-neutral-800 group transition-all duration-300 hover:shadow-2xl hover:shadow-brand-yellow/20">
+        <div className="h-32 sm:h-48 overflow-hidden relative">
+          <LazyImage
+            src={project.image}
+            alt={`Proyecto ${project.title}`}
+            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+          />
+          
+          {/* Botón VIDEO para SAPAL */}
+          {isSapalProject && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
+              <button
+                onClick={() => setIsVideoOpen(true)}
+                className="bg-black/50 backdrop-blur-sm text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg border border-white/30 hover:bg-black/70 hover:border-white/50 active:bg-black/70 active:border-white/50 transition-all duration-300 font-semibold text-xs sm:text-sm md:text-base shadow-lg touch-manipulation"
+                aria-label="Ver video del proyecto SAPAL"
+              >
+                🎬 VIDEO
+              </button>
+            </div>
+          )}
+        </div>
+        
+        <div className="p-4 sm:p-6">
+          <div className="flex justify-between items-start mb-2">
+            <h3 className="text-lg sm:text-xl font-bold text-white leading-tight">{project.title}</h3>
+            <span className="bg-brand-yellow/20 text-brand-yellow text-xs font-semibold px-2 sm:px-3 py-1 rounded-full ml-2">
+              {project.year}
+            </span>
+          </div>
+          
+          <p className="text-neutral-400 text-xs sm:text-sm mb-3 sm:mb-4">{project.location}</p>
+          
+          <p className="text-neutral-300 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 leading-relaxed">
+            {project.description}
+          </p>
+          
+          <div className="flex justify-between items-center pt-3 sm:pt-4 border-t border-neutral-700">
+            <div>
+              <span className="text-xs text-neutral-400 block">Capacidad</span>
+              <span className="text-brand-yellow font-bold text-sm sm:text-base">{project.capacity}</span>
+            </div>
+            <div className="bg-neutral-700/50 px-2 sm:px-3 py-1 rounded-full">
+              <span className="text-xs text-neutral-300">{project.type}</span>
+            </div>
+          </div>
+        </div>
       </div>
       
-      <p className="text-neutral-400 text-xs sm:text-sm mb-3 sm:mb-4">{project.location}</p>
-      
-      <p className="text-neutral-300 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 leading-relaxed">
-        {project.description}
-      </p>
-      
-      <div className="flex justify-between items-center pt-3 sm:pt-4 border-t border-neutral-700">
-        <div>
-          <span className="text-xs text-neutral-400 block">Capacidad</span>
-          <span className="text-brand-yellow font-bold text-sm sm:text-base">{project.capacity}</span>
-        </div>
-        <div className="bg-neutral-700/50 px-2 sm:px-3 py-1 rounded-full">
-          <span className="text-xs text-neutral-300">{project.type}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+      {/* Modal de Video */}
+      {isSapalProject && (
+        <VideoModal
+          isOpen={isVideoOpen}
+          onClose={() => setIsVideoOpen(false)}
+          videoSrc="/videos/video_sapal.mp4"
+          title="Proyecto SAPAL - León, Gto."
+        />
+      )}
+    </>
+  );
+};
 
 
 const ProjectsSection: React.FC<{ id?: string }> = ({ id = 'proyectos' }) => {

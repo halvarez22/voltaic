@@ -63,18 +63,18 @@ const Hero: React.FC<HeroProps> = ({ id = 'hero', onCTAClick }) => {
           />
         </div>
         
-        <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase leading-tight">
+        <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight uppercase leading-tight px-2">
           Energía Solar para un
           <br />
           <span className="text-brand-yellow">Futuro Sostenible</span>
         </h1>
-        <p className="mt-4 sm:mt-6 max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-neutral-300 leading-relaxed">
+        <p className="mt-4 sm:mt-6 max-w-2xl mx-auto text-sm xs:text-base sm:text-lg md:text-xl text-neutral-300 leading-relaxed px-4">
           Transformamos la luz del sol en energía limpia y ahorros para tu hogar o negocio. Descubre el poder de la tecnología fotovoltaica con Voltaic.
         </p>
         <div className="mt-8 sm:mt-10">
           <button
             onClick={onCTAClick}
-            className="bg-brand-yellow text-neutral-950 font-bold py-3 px-6 sm:px-8 rounded-full text-base sm:text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
+            className="bg-brand-yellow text-neutral-950 font-bold py-3 px-6 sm:px-8 rounded-full text-sm xs:text-base sm:text-lg hover:bg-yellow-300 active:bg-yellow-400 transition-all duration-300 transform hover:scale-105 active:scale-95 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto sm:mx-0 touch-manipulation"
           >
             Cotiza tu Proyecto
           </button>

@@ -22,7 +22,7 @@ const AboutSection: React.FC<{ id?: string }> = ({ id = 'nosotros' }) => {
         <div className="absolute inset-0 bg-neutral-950/60"></div>
       </div>
       
-      <div className="container mx-auto grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center p-4 sm:p-6 lg:p-10 relative z-10 max-w-7xl">
+      <div className="container mx-auto grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 xl:gap-12 items-center p-3 sm:p-4 lg:p-6 xl:p-10 relative z-10 max-w-7xl">
         <div className="w-full h-64 sm:h-80 lg:h-[500px] rounded-xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-105 order-2 lg:order-1">
           <LazyImage
             src={teamImage}
@@ -31,8 +31,8 @@ const AboutSection: React.FC<{ id?: string }> = ({ id = 'nosotros' }) => {
           />
         </div>
         
-        <div className="bg-white/5 backdrop-blur-sm p-4 sm:p-6 lg:p-8 rounded-xl border border-white/10 shadow-xl order-1 lg:order-2">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-white">
+        <div className="bg-white/5 backdrop-blur-sm p-3 sm:p-4 lg:p-6 xl:p-8 rounded-xl border border-white/10 shadow-xl order-1 lg:order-2">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-3 sm:mb-4 lg:mb-6 text-white">
             Sobre <span className="text-brand-yellow">VOLTAIC</span>
           </h2>
           

@@ -23,7 +23,7 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   return (
     <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 bg-green-500 hover:bg-green-600 text-white p-3 sm:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 group"
+      className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white p-3 sm:p-4 rounded-full shadow-lg hover:shadow-xl active:shadow-md transition-all duration-300 transform hover:scale-110 active:scale-95 group touch-manipulation"
       aria-label="Contactar por WhatsApp"
     >
       {/* Icono de WhatsApp */}

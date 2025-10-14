@@ -19,34 +19,28 @@ const NavigationHint: React.FC<NavigationHintProps> = ({ onClose }) => {
     setIsAnimating(false);
     setTimeout(() => {
       setIsVisible(false);
-      localStorage.setItem('voltaic-navigation-hint', 'true');
       onClose?.();
     }, 300);
   };
 
   useEffect(() => {
-    // Verificar si ya se mostró el hint anteriormente
-    const hasSeenHint = localStorage.getItem('voltaic-navigation-hint');
-    
-    if (!hasSeenHint) {
-      // Mostrar el hint después de un pequeño delay
-      const showTimer = setTimeout(() => {
-        setIsVisible(true);
-        setIsAnimating(true);
-        
-        // Auto-ocultar después de 5 segundos adicionales
-        hideTimerRef.current = setTimeout(() => {
-          handleClose();
-        }, 5000);
-      }, 3000);
+    // Mostrar el hint en cada nueva sesión después de un pequeño delay
+    const showTimer = setTimeout(() => {
+      setIsVisible(true);
+      setIsAnimating(true);
+      
+      // Auto-ocultar después de 5 segundos
+      hideTimerRef.current = setTimeout(() => {
+        handleClose();
+      }, 5000);
+    }, 2000); // Reducido de 3 segundos a 2 segundos para mejor UX
 
-      return () => {
-        clearTimeout(showTimer);
-        if (hideTimerRef.current) {
-          clearTimeout(hideTimerRef.current);
-        }
-      };
-    }
+    return () => {
+      clearTimeout(showTimer);
+      if (hideTimerRef.current) {
+        clearTimeout(hideTimerRef.current);
+      }
+    };
   }, []);
 
   if (!isVisible) return null;
@@ -58,7 +52,7 @@ const NavigationHint: React.FC<NavigationHintProps> = ({ onClose }) => {
       <div className={`text-center transform transition-all duration-500 ${
         isAnimating ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'
       }`}>
-        {/* Flecha Animada */}
+        {/* Flecha Animada Mejorada */}
         <div className="flex justify-center mb-4">
           <div className="flex items-center space-x-2 text-brand-yellow">
             <svg className="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,10 +67,11 @@ const NavigationHint: React.FC<NavigationHintProps> = ({ onClose }) => {
           </div>
         </div>
 
-        {/* Texto */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg border border-white/20">
-          <p className="text-neutral-900 font-semibold text-sm sm:text-base">
-            Desliza hacia la derecha para explorar
+        {/* Texto Mejorado */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-full px-4 sm:px-6 py-3 shadow-lg border border-white/20">
+          <p className="text-neutral-900 font-semibold text-xs sm:text-sm md:text-base">
+            <span className="hidden sm:inline">✨ Desliza hacia la derecha para explorar ✨</span>
+            <span className="sm:hidden">✨ Desliza → para explorar ✨</span>
           </p>
         </div>
 
