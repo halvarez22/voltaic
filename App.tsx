@@ -127,7 +127,12 @@ const App: React.FC = () => {
   useLayoutEffect(() => {
     const mainEl = mainContainerRef.current;
     if (mainEl) {
-      mainEl.scrollLeft = mainEl.clientWidth;
+      // Asegurar que el DOM esté completamente renderizado
+      requestAnimationFrame(() => {
+        // Posicionar en la primera sección real (hero), que está en el índice 1
+        // después del clone de contacto
+        mainEl.scrollLeft = mainEl.clientWidth;
+      });
     }
   }, []);
 
