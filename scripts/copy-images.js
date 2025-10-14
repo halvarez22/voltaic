@@ -10,6 +10,12 @@ async function copyImages() {
     const sourceDir = join(__dirname, '../images');
     const destDir = join(__dirname, '../public/images');
     
+    // Verificar si la carpeta de origen existe
+    if (!await fs.pathExists(sourceDir)) {
+      console.log('ℹ️  Carpeta de imágenes no encontrada, saltando copia de imágenes');
+      return;
+    }
+    
     // Crear directorio de destino si no existe
     await fs.ensureDir(destDir);
     
